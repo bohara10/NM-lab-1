@@ -1,44 +1,48 @@
-// Newton Raphson Method
-#include<iostream>
-#include<iomanip>
-#include<cmath>
+// Fixed Point Interation
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
 
 using namespace std;
 
-float function(float x) {
-    return sin(x) + x*x + 5*x - 9;
+float function(float x)
+{
+    return exp(-x);
 }
 
-float derivative(float x) {
-    return cos(x) + 2*x + 5;
-}
+int main()
+{
+    float num1;
 
-int main() {
-    int num;
     cout << "Enter a number: ";
-    cin >> num;
-    cout << endl;
-    float c, x_old, x_new, fx, dx, error;
-    c = 1;
-    x_new = num;
+    cin >> num1;
 
-    cout << "Iteration\tx(old)\t\tf(x) (old)\tf`(x) (old)\tx(new)\t\tError\n";
-    
-    do {
-        x_old = x_new;
-        fx = function(x_old);
-        dx = derivative(x_old);
-        x_new = x_old - (fx / dx);
-        error = (x_new - x_old) / x_new;
-        
-        if (error < 0) {
+    cout << endl;
+    int c;
+    float xn, xn1, error;
+    c = 1;
+
+    cout << "Iteration\txn\txn+1\tError\n";
+
+    do
+    {
+        xn = num1;
+        xn1 = function(xn);
+        num1 = xn1;
+        error = (xn1 - xn) / xn1;
+
+        if (error < 0)
+        {
             error = -error;
         }
 
-        cout << fixed << setprecision(4) << c << "\t\t" << x_old << "\t\t" << fx << "\t\t" << dx << "\t\t" << x_new << "\t\t" << error << "\n";
+        cout << fixed << setprecision(3) << c << "\t\t" << xn << "\t" << xn1 << "\t" << error << "\n";
         c = c + 1;
+
     } while (error > 0.05);
 
-    cout << endl << "Final output: " << fixed << setprecision(2) << x_new;
+    cout << endl
+         << "Final output: " << fixed << setprecision(2) << xn1;
     return 0;
 }
